@@ -1,5 +1,6 @@
 <div class="row justify-content-center">
     <form action="<?= site_url('create') ?>" method="post" class="col-md-6 col-lg-4 mt-5">
+        <input type="hidden" name="<?= $csrf['name']; ?>" value="<?= $csrf['hash']; ?>" />
         <div class="form-group my-1">
             <label for="lastname">Nom</label> <?= form_error('lastname') ?>
             <input type="text" id="lastname" name="lastname" class="form-control" value="<?= $_POST['lastname'] ?? '' ?>">

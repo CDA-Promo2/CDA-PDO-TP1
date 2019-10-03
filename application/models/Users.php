@@ -62,9 +62,12 @@ class Users extends CI_Model {
             'phone' => $this->input->post('phone'),
             'id_Services' => $this->input->post('id_Services'),
         );
+        // Nettoyage des données (anti faille XSS)
+        $data = $this->security->xss_clean($data);
         // Puis on insert ces informations dans la table Users
         return $this->db->insert('Users', $data);
     }
+
     // Mise à jour d'un utilisateur
     public function updateUser($id) {
         // On récupère les informations du formulaire
@@ -77,10 +80,13 @@ class Users extends CI_Model {
             'phone' => $this->input->post('phone'),
             'id_Services' => $this->input->post('id_Services'),
         );
+        // Nettoyage des données (anti faille XSS)
+        $data = $this->security->xss_clean($data);
         // Puis on insert les nouvelles informations de l'utilisateur dans la table Users
         $this->db->where('id', $id);
         return $this->db->update('Users', $data);
     }
+
     // Suppression d'un utilsiateur
     public function deleteUser($id) {
         $this->db->where('id', $id);

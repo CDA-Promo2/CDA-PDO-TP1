@@ -43,6 +43,11 @@ class User extends CI_Controller {
         $data['title'] = "Ajout d'un utilisateur";
         // Récupération des services
         $data['services'] = $this->Services->getServices();
+        // Mise en place sécurité CSRF
+        $csrf = [
+            'name' => $this->security->get_csrf_token_name(),
+            'hash' => $this->security->get_csrf_hash()
+        ];
         // Si le formulaire de création a été submit
         if ($_POST) {
             // Modification de l'affichage des erreurs
@@ -57,9 +62,9 @@ class User extends CI_Controller {
             }
         }
         // Chargement des différentes vues servant à la création d'un utilisateur
-        $this->load->view('common/header', $data);
-        $this->load->view('user/create', $data);
-        $this->load->view('common/footer', $data);
+        $this->load->view('common/header', [$data, $csrf]);
+        $this->load->view('user/create', [$data, $csrf]);
+        $this->load->view('common/footer', [$data, $csrf]);
     }
 
     // Méthode gérant la modification d'un utilisateur
@@ -68,6 +73,11 @@ class User extends CI_Controller {
         $data['title'] = "Modification d'un utilisateur";
         // Récupération des services
         $data['services'] = $this->Services->getServices();
+        // Mise en place sécurité CSRF
+        $csrf = [
+            'name' => $this->security->get_csrf_token_name(),
+            'hash' => $this->security->get_csrf_hash()
+        ];
         // Si le formulaire de modification a été submit
         if ($_POST) {
             // Modification de l'affichage des erreurs
@@ -87,9 +97,9 @@ class User extends CI_Controller {
             show_404();
         } else {
             // Affichage des vues correspondants à l'édition
-            $this->load->view('common/header', $data);
-            $this->load->view('user/edit', $data);
-            $this->load->view('common/footer', $data);
+            $this->load->view('common/header', [$data, $csrf]);
+            $this->load->view('user/edit', [$data, $csrf]);
+            $this->load->view('common/footer', [$data, $csrf]);
         }
     }
 
